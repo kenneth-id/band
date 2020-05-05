@@ -8,3 +8,7 @@ miditoolkit.egg-info/
 *.pypirc
 Thumbs.db
 *.gz
+result/with_prompt/*
+result/from_scratch/*
+REMI-tempo-chord-checkpoint/
+data/
