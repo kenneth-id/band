@@ -1,19 +1,9 @@
-# REMI
+# musicAI: Music Generation for Multiple Genres and Novel Sampling Techniques with Transformer-XL
+
+Adapted from: REMI
 Authors: [Yu-Siang Huang](https://remyhuang.github.io/), [Yi-Hsuan Yang](http://mac.citi.sinica.edu.tw/~yang/)
 
 [**Paper (arXiv)**](https://arxiv.org/abs/2002.00212) | [**Blog**](https://ailabs.tw/human-interaction/pop-music-transformer/) | [**Audio demo (Google Drive)**](https://drive.google.com/open?id=1LzPBjHPip4S0CBOLquk5CNapvXSfys54) | [**Online interactive demo**](https://vibertthio.com/transformer/)
-
-REMI, which stands for `REvamped MIDI-derived events`, is a new event representation we propose for converting MIDI scores into text-like discrete tokens.  Compared to the MIDI-like event representation adopted in exising Transformer-based music composition models, REMI provides sequence models a metrical context for modeling the rhythmic patterns of music. Using REMI as the event representation, we train a Transformer-XL model to generate minute-long Pop piano music with expressive, coherent and clear structure of rhythm and harmony, without needing any post-processing to refine the result. The model also provides controllability of local tempo changes and chord progression.
-
-## Citation
-```
-@article{huang2020pop,
-  title={Pop music transformer: Generating music with rhythm and harmony},
-  author={Huang, Yu-Siang and Yang, Yi-Hsuan},
-  journal={arXiv preprint arXiv:2002.00212},
-  year={2020}
-}
-```
 
 ## Getting Started
 ### Install Dependencies
@@ -32,38 +22,11 @@ We provide the MIDI files including local tempo changes and estimated chord. [(5
 * `data/evaluation`: 100 files (prompts) used for the continuation experiments
 
 ## Generate Samples
-See `main.py` as an example:
-```python
-from model import PopMusicTransformer
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-
-def main():
-    # declare model
-    model = PopMusicTransformer(
-        checkpoint='REMI-tempo-checkpoint',
-        is_training=False)
-    # generate from scratch
-    model.generate(
-        n_target_bar=16,
-        temperature=1.2,
-        topk=5,
-        output_path='./result/from_scratch.midi',
-        prompt=None)
-    # generate continuation
-    model.generate(
-        n_target_bar=16,
-        temperature=1.2,
-        topk=5,
-        output_path='./result/continuation.midi',
-        prompt='./data/evaluation/000.midi')
-    # close model
-    model.close()
-
-if __name__ == '__main__':
-    main()
+A generation script is provided as generate_script.py, see source code for command flags.
+Example usage:
 ```
-
+python generate_script.py --nb 32
+```
 ## Convert MIDI to REMI
 You can find out how to convert the MIDI messages into REMI events in the `midi2remi.ipynb`.
 
